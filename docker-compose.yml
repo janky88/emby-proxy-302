@@ -7,8 +7,8 @@ services:
     environment:
       - TZ=Asia/Shanghai
       - ADMIN_HOST=0.0.0.0
-      - ADMIN_PORT=8080
-      - DATABASE_URL=sqlite:///app/instance/emby_proxy.db
+      - ADMIN_PORT=11089
+      - DATABASE_URL=sqlite:////app/instance/emby_proxy.db
       - FLASK_ENV=production
       - PYTHONUNBUFFERED=1
       - DEBUG=false
