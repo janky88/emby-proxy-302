@@ -1,0 +1,20 @@
+services:
+  emby-proxy-tdr:
+    image: onemanjs/emby-proxy-tdr:latest
+    container_name: emby-proxy-tdr
+    restart: unless-stopped
+    network_mode: "host"
+    environment:
+      - TZ=Asia/Shanghai
+      - ADMIN_HOST=0.0.0.0
+      - ADMIN_PORT=8080
+      - DATABASE_URL=sqlite:///app/instance/emby_proxy.db
+      - FLASK_ENV=production
+      - PYTHONUNBUFFERED=1
+      - DEBUG=false
+      - ENABLE_REGISTRATION=auto
+      - DEFAULT_LOG_LEVEL=INFO
+      - CONTAINER_ENV=docker
+    volumes:
+      - ./instance:/app/instance
+      - ./logs:/app/logs
