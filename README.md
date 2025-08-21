@@ -56,7 +56,7 @@ docker-compose up -d
 ```
 
 4. **访问管理界面**
-- 地址: http://localhost:8080
+- 地址: http://localhost:11089
 - 首次访问会引导创建管理员账户
 
 ### 📄 Docker Compose 配置
@@ -71,8 +71,8 @@ services:
     environment:
       - TZ=Asia/Shanghai
       - ADMIN_HOST=0.0.0.0
-      - ADMIN_PORT=8080
-      - DATABASE_URL=sqlite:///app/instance/emby_proxy.db
+      - ADMIN_PORT=11089
+      - DATABASE_URL=sqlite:////app/instance/emby_proxy.db
       - FLASK_ENV=production
       - PYTHONUNBUFFERED=1
       - DEBUG=false
@@ -86,15 +86,15 @@ services:
 
 ### 🔧 环境变量说明
 
-| 变量名 | 默认值 | 描述 |
-|--------|--------|------|
-| `TZ` | Asia/Shanghai | 时区设置 |
-| `ADMIN_HOST` | 0.0.0.0 | 管理界面监听地址 |
-| `ADMIN_PORT` | 8080 | 管理界面端口 |
-| `DATABASE_URL` | sqlite:///app/instance/emby_proxy.db | 数据库连接串 |
-| `DEBUG` | false | 调试模式开关 |
-| `ENABLE_REGISTRATION` | auto | 注册功能控制 |
-| `DEFAULT_LOG_LEVEL` | INFO | 默认日志级别 |
+| 变量名 | 默认值                                   | 描述 |
+|--------|---------------------------------------|------|
+| `TZ` | Asia/Shanghai                         | 时区设置 |
+| `ADMIN_HOST` | 0.0.0.0                               | 管理界面监听地址 |
+| `ADMIN_PORT` | 11089                                 | 管理界面端口 |
+| `DATABASE_URL` | sqlite:////app/instance/emby_proxy.db | 数据库连接串 |
+| `DEBUG` | false                                 | 调试模式开关 |
+| `ENABLE_REGISTRATION` | auto                                  | 注册功能控制 |
+| `DEFAULT_LOG_LEVEL` | INFO                                  | 默认日志级别 |
 
 ### 📁 数据持久化
 
@@ -131,7 +131,7 @@ docker-compose pull && docker-compose up -d
 
 1. **克隆项目**
 ```bash
-git clone https://github.com/your-username/emby-proxy-tdr.git
+git clone https://github.com/OneManJS/emby-proxy-tdr.git
 cd emby-proxy-tdr
 ```
 
@@ -146,7 +146,7 @@ python start.py
 ```
 
 4. **访问界面**
-- 地址: http://localhost:8080
+- 地址: http://localhost:11089
 
 ## 📖 使用指南
 
@@ -166,6 +166,7 @@ python start.py
    - 支持HTTP、HTTPS、SMB等协议
 
 4. **集成115网盘** (可选)
+   - 只劫持strm中?pickcode=xxxx类型的链接，cms生成的strm需要打开支持开关
    - 登录115网盘获取Cookie
    - 在实例配置中添加Cookie信息
    - 启用直链播放功能
@@ -181,16 +182,13 @@ python start.py
 
 #### 路径映射配置
 ```
-本地路径: /mnt/movies
-远程路径: http://nas.local:8080/movies
+本地路径: /mnt
+远程路径: http://nas.local:8080
+strm：/mnt/movies/外语电影/1.mp4
+替换结果：http://nas.local:8080/movies/外语电影/1.mp4
 ```
+支持懒人配置，输入一个完整的本地路径和对应的远程路径，程序可以自动匹配
 
-#### 115网盘配置
-1. 浏览器登录 https://115.com
-2. 按F12打开开发者工具
-3. 复制Cookie信息
-4. 在实例配置中粘贴Cookie
-5. 测试连接状态
 
 ### 👥 用户管理
 
@@ -212,7 +210,7 @@ python start.py
 #### Docker容器无法启动
 ```bash
 # 检查端口占用
-netstat -tlnp | grep 8080
+netstat -tlnp | grep 11089
 
 # 查看容器日志
 docker-compose logs -f
@@ -222,6 +220,7 @@ docker-compose logs -f
 1. 确认Cookie信息正确性
 2. 检查网络连接状态
 3. 尝试重新获取Cookie
+
 
 ### 📋 日志查看
 ```bash
@@ -259,10 +258,6 @@ tar -xzf backup-20240101.tar.gz
 - 提供系统环境信息
 - 附上相关错误日志
 
-
-## 🙏 致谢
-
-感谢所有为项目做出贡献的开发者和用户！
 
 ### 技术栈致谢
 - [Flask](https://flask.palletsprojects.com/) - 轻量级Web框架
