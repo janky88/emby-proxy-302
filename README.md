@@ -1,3 +1,5 @@
+<h1>懒得写，全文AI生成，有需要自己折腾</h1>
+
 # 🎬 Emby代理管理系统 (emby-proxy-tdr)
 
 <p align="center">
